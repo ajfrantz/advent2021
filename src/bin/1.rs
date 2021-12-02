@@ -136,11 +136,9 @@ fn main() {
     println!("{}", increases);
 
     // part two
-    let windows: Vec<u32> = READINGS[..]
-        .windows(3)
-        .map(|m| m.iter().sum())
-        .collect();
-    let increases = windows[..].windows(2)
+    let windows: Vec<u32> = READINGS[..].windows(3).map(|m| m.iter().sum()).collect();
+    let increases = windows[..]
+        .windows(2)
         .filter(|pair| pair[1] > pair[0])
         .count();
     println!("{}", increases);
