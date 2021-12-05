@@ -87,11 +87,17 @@ fn main() -> Result<()> {
     let num_boards = boards.len();
     for draw in &draw_order {
         for board in boards.iter_mut() {
-            if board.has_won() { continue; }
+            if board.has_won() {
+                continue;
+            }
             board.draw(*draw);
             if board.has_won() {
-                if wins == 0 { println!("part one answer: {}", board.score() * draw); }
-                if wins == num_boards - 1 { println!("part two answer: {}", board.score() * draw); }
+                if wins == 0 {
+                    println!("part one answer: {}", board.score() * draw);
+                }
+                if wins == num_boards - 1 {
+                    println!("part two answer: {}", board.score() * draw);
+                }
                 wins += 1;
             }
         }
