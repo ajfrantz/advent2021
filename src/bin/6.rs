@@ -10,7 +10,7 @@ fn main() -> Result<()> {
     let mut population = [0usize; 9];
     input
         .split(",")
-        .map(|s| usize::parse(s).unwrap() )
+        .map(|s| usize::parse(s).unwrap())
         .for_each(|n| population[n] += 1);
 
     // Part One
