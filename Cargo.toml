@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 color-eyre = "0.5"
 reformation = "0.5"
+itertools = "0.10"
 
