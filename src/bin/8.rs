@@ -66,7 +66,12 @@ fn main() -> Result<()> {
                 let mut value = 0;
                 for digit in outputs {
                     value *= 10;
-                    value += expected_patterns.iter().enumerate().find(|(_, &p)| p == digit).unwrap().0;
+                    value += expected_patterns
+                        .iter()
+                        .enumerate()
+                        .find(|(_, &p)| p == digit)
+                        .unwrap()
+                        .0;
                 }
                 answer += value;
                 break;
