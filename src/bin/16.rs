@@ -24,11 +24,14 @@ fn parse_packet(bits: &BitSlice<Msb0, u8>) -> (Packet, &BitSlice<Msb0, u8>) {
         _ => parse_operator(&bits[6..]),
     };
 
-    (Packet {
-        version,
-        type_id,
-        payload,
-    }, tail)
+    (
+        Packet {
+            version,
+            type_id,
+            payload,
+        },
+        tail,
+    )
 }
 
 fn parse_literal(mut bits: &BitSlice<Msb0, u8>) -> (Payload, &BitSlice<Msb0, u8>) {
@@ -53,7 +56,9 @@ fn parse_operator(bits: &BitSlice<Msb0, u8>) -> (Payload, &BitSlice<Msb0, u8>) {
     }
 }
 
-fn parse_operator_by_number_of_subpackets(mut bits: &BitSlice<Msb0, u8>) -> (Payload, &BitSlice<Msb0, u8>) {
+fn parse_operator_by_number_of_subpackets(
+    mut bits: &BitSlice<Msb0, u8>,
+) -> (Payload, &BitSlice<Msb0, u8>) {
     let num_subpackets: usize = bits[0..11].load_be();
     bits = &bits[11..];
 
@@ -67,7 +72,9 @@ fn parse_operator_by_number_of_subpackets(mut bits: &BitSlice<Msb0, u8>) -> (Pay
     (Payload::Operator(packets), bits)
 }
 
-fn parse_operator_by_number_of_bits(mut bits: &BitSlice<Msb0, u8>) -> (Payload, &BitSlice<Msb0, u8>) {
+fn parse_operator_by_number_of_bits(
+    mut bits: &BitSlice<Msb0, u8>,
+) -> (Payload, &BitSlice<Msb0, u8>) {
     let mut bits_remaining: usize = bits[0..15].load_be();
     bits = &bits[15..];
 
@@ -114,9 +121,27 @@ fn evaluate(packet: &Packet) -> u64 {
         1 => values.product(),
         2 => values.min().unwrap(),
         3 => values.max().unwrap(),
-        5 => if values.next().unwrap() > values.next().unwrap() { 1 } else { 0 },
-        6 => if values.next().unwrap() < values.next().unwrap() { 1 } else { 0 },
-        7 => if values.next().unwrap() == values.next().unwrap() { 1 } else { 0 },
+        5 => {
+            if values.next().unwrap() > values.next().unwrap() {
+                1
+            } else {
+                0
+            }
+        }
+        6 => {
+            if values.next().unwrap() < values.next().unwrap() {
+                1
+            } else {
+                0
+            }
+        }
+        7 => {
+            if values.next().unwrap() == values.next().unwrap() {
+                1
+            } else {
+                0
+            }
+        }
         _ => panic!("illegal type id"),
     }
 }
@@ -126,8 +151,14 @@ fn main() -> Result<()> {
 
     let input = INPUT;
 
-    let digits: Vec<_> = input.chars().map(|c| c.to_digit(16).unwrap() as u8).collect();
-    let data: Vec<_> = digits.chunks(2).map(|digits| digits[0] << 4 | digits[1]).collect();
+    let digits: Vec<_> = input
+        .chars()
+        .map(|c| c.to_digit(16).unwrap() as u8)
+        .collect();
+    let data: Vec<_> = digits
+        .chunks(2)
+        .map(|digits| digits[0] << 4 | digits[1])
+        .collect();
 
     let bits = data.view_bits::<Msb0>();
 
