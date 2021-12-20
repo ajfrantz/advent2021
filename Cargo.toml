@@ -10,4 +10,5 @@ color-eyre = "0.5"
 reformation = "0.5"
 itertools = "0.10"
 pathfinding = "3"
+bitvec = "0.22"
 
