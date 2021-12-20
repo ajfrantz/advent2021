@@ -9,4 +9,5 @@ edition = "2021"
 color-eyre = "0.5"
 reformation = "0.5"
 itertools = "0.10"
+pathfinding = "3"
 

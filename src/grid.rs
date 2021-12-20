@@ -177,3 +177,39 @@ impl Iterator for NeighborsIter {
         }
     }
 }
+
+pub trait Neighbors4 {
+    type Iter: std::iter::Iterator;
+    fn neighbors4(&self) -> Self::Iter;
+}
+
+impl Neighbors4 for (i32, i32) {
+    type Iter = Neighbors4Iter;
+
+    fn neighbors4(&self) -> Self::Iter {
+        Neighbors4Iter {
+            center: *self,
+            i: 0,
+        }
+    }
+}
+
+pub struct Neighbors4Iter {
+    center: (i32, i32),
+    i: usize,
+}
+
+impl Iterator for Neighbors4Iter {
+    type Item = (i32, i32);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.i = self.i.saturating_add(1);
+        match self.i {
+            1 => Some((self.center.0, self.center.1 - 1)),
+            2 => Some((self.center.0 - 1, self.center.1)),
+            3 => Some((self.center.0 + 1, self.center.1)),
+            4 => Some((self.center.0, self.center.1 + 1)),
+            _ => None,
+        }
+    }
+}
