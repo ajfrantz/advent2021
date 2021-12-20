@@ -11,4 +11,5 @@ reformation = "0.5"
 itertools = "0.10"
 pathfinding = "3"
 bitvec = "0.22"
+nalgebra = "0.29"
 
