@@ -27,6 +27,7 @@ dependencies = [
  "nalgebra",
  "pathfinding",
  "reformation",
+ "rustc-hash",
 ]
 
 [[package]]

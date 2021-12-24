@@ -12,4 +12,5 @@ itertools = "0.10"
 pathfinding = "3"
 bitvec = "0.22"
 nalgebra = "0.29"
+rustc-hash = "1.1"
 
