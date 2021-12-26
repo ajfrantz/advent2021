@@ -2,11 +2,11 @@ use std::ops::{Index, IndexMut};
 
 #[derive(Debug)]
 pub struct Grid<T> {
-    x_min: i32,
-    x_len: i32,
-    y_min: i32,
-    y_len: i32,
-    map: Vec<T>,
+    pub x_min: i32,
+    pub x_len: i32,
+    pub y_min: i32,
+    pub y_len: i32,
+    pub map: Vec<T>,
 }
 
 impl<T> Grid<T>
